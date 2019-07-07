@@ -2,6 +2,7 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { QuestionModule } from './question/question.module';
 import {ConfigModule, ConfigService} from 'nestjs-config';
+import { CompanyModule } from './company/company.module';
 import * as path from 'path';
 
 @Module({
@@ -12,6 +13,7 @@ import * as path from 'path';
       inject: [ConfigService],
     }),
     QuestionModule,
+    CompanyModule,
   ],
 })
 export class AppModule {}
