@@ -1,10 +1,17 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { QuestionModule } from './question/question.module';
+import {ConfigModule, ConfigService} from 'nestjs-config';
+import * as path from 'path';
 
 @Module({
-  imports: [],
-  controllers: [AppController],
-  providers: [AppService],
+  imports: [
+    ConfigModule.load(path.resolve(__dirname, 'config', '**', '!(*.d).{ts,js}')),
+    TypeOrmModule.forRootAsync({
+      useFactory: (config: ConfigService) => config.get('database'),
+      inject: [ConfigService],
+    }),
+    QuestionModule,
+  ],
 })
 export class AppModule {}
