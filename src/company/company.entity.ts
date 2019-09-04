@@ -16,4 +16,7 @@ export class Company extends BaseEntity {
 
   @Column()
   location: string;
+
+  @Column()
+  logo: string;
 }
