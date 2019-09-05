@@ -59,7 +59,7 @@ export class ScoreService {
   }
 
   private calculateOutcome(a: number, b: number) {
-    const outcome: Outcome = EloCalculator.getOutcome(a, b, 1);
+    const outcome: Outcome = EloCalculator.getOutcome(a, b, 1, 40, 400);
     return {
       winnerScore: Math.round(outcome.a.rating),
       winnerDelta: Math.round(outcome.a.delta),
