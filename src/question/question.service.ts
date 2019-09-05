@@ -5,13 +5,17 @@ import {Question} from './question.entity';
 
 @Injectable()
 export class QuestionService {
-    constructor(
-        @InjectRepository(Question)
-        private readonly questionRepository: Repository<Question>,
-    ) {
-    }
+  constructor(
+    @InjectRepository(Question)
+    private readonly questionRepository: Repository<Question>,
+  ) {
+  }
 
-    getRandom(): Promise<Question> {
-        return this.questionRepository.createQueryBuilder().select(['id', 'text']).orderBy('RANDOM()').limit(1).getRawOne();
-    }
+  getAll(): Promise<Question[]> {
+    return this.questionRepository.createQueryBuilder().getMany();
+  }
+
+  getRandom(): Promise<Question> {
+    return this.questionRepository.createQueryBuilder().orderBy('RANDOM()').limit(1).getOne();
+  }
 }
