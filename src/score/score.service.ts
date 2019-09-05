@@ -38,6 +38,16 @@ export class ScoreService {
     return outcome;
   }
 
+  getScoresForQuestion(id: number): Promise<Score[]> {
+    return this.scoreRepository
+      .createQueryBuilder('score')
+      .leftJoinAndSelect('score.company', 'company')
+      .where('"questionId" = :id', {id})
+      .select(['score.id', 'score.score', 'company.name'])
+      .orderBy('score.score', 'DESC')
+      .getMany();
+  }
+
   private getScore(voteDto: VoteDto, position: string) {
     return this.scoreRepository
       .createQueryBuilder()
