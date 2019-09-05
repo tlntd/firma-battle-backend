@@ -1,4 +1,5 @@
-import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import {BaseEntity, Column, Entity, OneToMany, PrimaryGeneratedColumn} from 'typeorm';
+import {Score} from '../score/score.entity';
 
 @Entity()
 export class Company extends BaseEntity {
@@ -19,4 +20,7 @@ export class Company extends BaseEntity {
 
   @Column()
   logo: string;
+
+  @OneToMany(type => Score, score => score.company)
+  scores: Score[];
 }

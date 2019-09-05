@@ -1,4 +1,5 @@
-import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import {BaseEntity, Column, Entity, OneToMany, PrimaryGeneratedColumn} from 'typeorm';
+import {Score} from '../score/score.entity';
 
 @Entity()
 export class Question extends BaseEntity {
@@ -7,4 +8,7 @@ export class Question extends BaseEntity {
 
     @Column()
     text: string;
+
+    @OneToMany(type => Score, score => score.question)
+    scores: Score[];
 }

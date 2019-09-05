@@ -3,6 +3,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { QuestionModule } from './question/question.module';
 import {ConfigModule, ConfigService} from 'nestjs-config';
 import { CompanyModule } from './company/company.module';
+import { VoteModule } from './vote/vote.module';
 import * as path from 'path';
 
 @Module({
@@ -14,6 +15,7 @@ import * as path from 'path';
     }),
     QuestionModule,
     CompanyModule,
+    VoteModule,
   ],
 })
 export class AppModule {}
