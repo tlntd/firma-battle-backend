@@ -11,6 +11,10 @@ export class CompanyService {
   ) {
   }
 
+  getAll(): Promise<Company[]> {
+    return this.companyRepository.createQueryBuilder().select(['id', 'name']).execute();
+  }
+
   getTwoRandom(): Promise<Company[]> {
     return this.companyRepository.createQueryBuilder().select(['id', 'name', 'logo']).orderBy('RANDOM()').limit(2).execute();
   }

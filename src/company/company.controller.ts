@@ -6,6 +6,11 @@ import {Company} from './interfaces/company.interface';
 export class CompanyController {
   constructor(private readonly companyService: CompanyService) { }
 
+  @Get()
+  getAll(): Promise<Company[]> {
+    return this.companyService.getAll();
+  }
+
   @Get('random')
   getTwoRandom(): Promise<Company[]> {
     return this.companyService.getTwoRandom();
