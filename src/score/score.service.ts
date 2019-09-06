@@ -32,8 +32,8 @@ export class ScoreService {
 
     const outcome: OutcomeResponse = this.calculateOutcome(oldWinnerScore, oldLoserScore);
 
-    await this.saveScore(voteDto, outcome.winnerScore, outcome.winnerDelta, 'winner');
-    await this.saveScore(voteDto, outcome.loserScore, outcome.loserDelta, 'loser');
+    await this.saveScore(voteDto, outcome, true);
+    await this.saveScore(voteDto, outcome, false);
 
     return outcome;
   }
@@ -81,13 +81,21 @@ export class ScoreService {
       .getOne();
   }
 
-  private async saveScore(voteDto: VoteDto, rating: number, delta: number, position: string) {
+  private async saveScore(voteDto: VoteDto, outcome: OutcomeResponse, winner: boolean) {
     const newScore: Score = new Score();
-    newScore.company = await this.companyRepository.findOne(voteDto[`${position}Id`]);
     newScore.question = await this.questionRepository.findOne(voteDto.questionId);
-    newScore.score = rating;
-    newScore.delta = delta;
-    newScore.winner = position === 'winner';
+    newScore.winner = winner;
+    if (winner) {
+      newScore.company = await this.companyRepository.findOne(voteDto.winnerId);
+      newScore.opponent = await this.companyRepository.findOne(voteDto.loserId);
+      newScore.score = outcome.winnerScore;
+      newScore.delta = outcome.winnerDelta;
+    } else {
+      newScore.company = await this.companyRepository.findOne(voteDto.loserId);
+      newScore.opponent = await this.companyRepository.findOne(voteDto.winnerId);
+      newScore.score = outcome.loserScore;
+      newScore.delta = outcome.loserDelta;
+    }
     return this.scoreRepository.save(newScore);
   }
 

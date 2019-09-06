@@ -10,6 +10,9 @@ export class Score extends BaseEntity {
   @ManyToOne(company => Company, company => company.scores)
   company: Company;
 
+  @ManyToOne(opponent => Company, opponent => opponent.scores)
+  opponent: Company;
+
   @ManyToOne(question => Question, question => question.scores)
   question: Question;
 
