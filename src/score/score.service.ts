@@ -52,8 +52,8 @@ export class ScoreService {
           "id" 
         FROM score 
         WHERE "score"."companyId" = "company"."id" 
-        ORDER BY "score"."createdAt" 
-        DESC LIMIT 1) 
+        ORDER BY "score"."createdAt" DESC 
+        LIMIT 1) 
       WHERE "score"."questionId" = $1 
       ORDER BY "score" DESC
     `, [id]);
