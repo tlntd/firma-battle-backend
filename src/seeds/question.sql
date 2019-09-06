@@ -2,7 +2,7 @@ INSERT INTO question (id, text, "pluralText") VALUES
     (1, 'Kummalla yrityksellä on paremmat bileet?', 'Millä yrityksellä on parhaat bileet?'),
     (2, 'Kummalla yrityksellä on innovatiivisemmat työskentelytavat?', 'Millä yrityksellä on innovatiivisimmat työskentelytavat?'),
     (3, 'Kummalla yrityksellä on korkeammat palkat?', 'Millä yrityksellä on korkeimmat palkat?'),
-    (4, 'Kummalla yrityksellä on parempi imago?', 'Millä yrityksellä on paras image?'),
+    (4, 'Kummalla yrityksellä on parempi imago?', 'Millä yrityksellä on paras imago?'),
     (5, 'Kummalla yrityksellä on viihdyttävämpi sosiaalisen median preesenssi?', 'Millä yrityksellä on viihdyttävin sosiaalisen medinan preesens?'),
     (6, 'Kumpi yritys tuottaa parempaa koodia?', 'Mikä yritys tuottaa parasta koodia?'),
     (7, 'Kumpi yritys tuottaa parempaa designia?', 'Mikä yritys tuottaa parasta designia?'),
