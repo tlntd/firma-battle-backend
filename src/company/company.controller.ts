@@ -1,10 +1,16 @@
-import {Controller, Get} from '@nestjs/common';
+import {Controller, Get, Param} from '@nestjs/common';
 import {CompanyService} from './company.service';
 import {Company} from './interfaces/company.interface';
+import {Score} from '../score/score.entity';
+import {ScoreService} from '../score/score.service';
 
 @Controller('companies')
 export class CompanyController {
-  constructor(private readonly companyService: CompanyService) { }
+  constructor(
+    private readonly companyService: CompanyService,
+    private readonly scoreService: ScoreService,
+  ) {
+  }
 
   @Get()
   getAll(): Promise<Company[]> {
@@ -14,5 +20,10 @@ export class CompanyController {
   @Get('random')
   getTwoRandom(): Promise<Company[]> {
     return this.companyService.getTwoRandom();
+  }
+
+  @Get(':id/scores')
+  getScores(@Param('id') id: number): Promise<Score[]> {
+    return this.scoreService.getScoresForCompany(id);
   }
 }
