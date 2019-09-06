@@ -1,5 +1,5 @@
 import {Company} from '../../company/company.entity';
-import {Question} from '../../../dist/question/question.entity';
+import {Question} from '../../question/question.entity';
 
 export interface Score {
   readonly id: number;
