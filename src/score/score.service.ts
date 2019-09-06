@@ -41,21 +41,24 @@ export class ScoreService {
   async getScoresForQuestion(id: number): Promise<Score[]> {
     /* tslint:disable */
     const scores = await this.scoreRepository.query(`
-      SELECT 
-        "score"."id" AS "id", 
-        "score"."score", 
-        "company"."name" AS "name",
-        "company"."id" AS "companyId"
-      FROM company 
-      INNER JOIN score ON "score"."id" = (
+      WITH "createdScores" AS (
         SELECT 
-          "id" 
-        FROM score 
-        WHERE "score"."companyId" = "company"."id" 
-        ORDER BY "score"."createdAt" DESC 
-        LIMIT 1) 
-      WHERE "score"."questionId" = $1 
-      ORDER BY "score" DESC
+          *, 
+          ROW_NUMBER() OVER (
+            PARTITION BY "questionId", "companyId" ORDER BY "createdAt" DESC
+          ) AS "scoreOrder"
+        FROM score
+      )
+      SELECT 
+        "createdScores"."id" AS "id",
+        "createdScores"."score" AS "score", 
+        "createdScores"."companyId" AS "companyId",
+        "company"."name" AS "name"
+      FROM "createdScores" 
+      INNER JOIN company ON company.id = "createdScores"."companyId"
+      WHERE "scoreOrder" = 1
+      AND "questionId" = $1
+      ORDER BY "score" DESC;
     `, [id]);
     const wins = await this.scoreRepository.query(`
       SELECT 
