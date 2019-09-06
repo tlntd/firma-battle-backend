@@ -38,13 +38,14 @@ export class ScoreService {
     return outcome;
   }
 
-  getScoresForQuestion(id: number): Promise<Score[]> {
+  async getScoresForQuestion(id: number): Promise<Score[]> {
     /* tslint:disable */
-    return this.scoreRepository.query(`
+    const scores = await this.scoreRepository.query(`
       SELECT 
         "score"."id" AS "id", 
         "score"."score", 
-        "company"."name" AS "name" 
+        "company"."name" AS "name",
+        "company"."id" AS "companyId"
       FROM company 
       INNER JOIN score ON "score"."id" = (
         SELECT 
@@ -56,6 +57,19 @@ export class ScoreService {
       WHERE "score"."questionId" = $1 
       ORDER BY "score" DESC
     `, [id]);
+    const wins = await this.scoreRepository.query(`
+      SELECT 
+        "companyId",
+        COUNT(CASE WHEN "score"."winner" THEN 1 END) AS "wins",
+        COUNT(*) AS "scores"
+      FROM score 
+      WHERE "score"."questionId" = $1
+      GROUP BY "companyId"
+    `, [id]);
+    return scores.map((score) => {
+      const win = wins.find((win) => win.companyId === score.companyId);
+      return {...score, ...win}
+    });
     /* tslint:enable */
   }
 
