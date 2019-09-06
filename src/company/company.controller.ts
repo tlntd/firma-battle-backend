@@ -8,7 +8,6 @@ import {ScoreService} from '../score/score.service';
 export class CompanyController {
   constructor(
     private readonly companyService: CompanyService,
-    private readonly scoreService: ScoreService,
   ) {
   }
 
@@ -24,6 +23,6 @@ export class CompanyController {
 
   @Get(':id/scores')
   getScores(@Param('id') id: number): Promise<Score[]> {
-    return this.scoreService.getScoresForCompany(id);
+    return this.companyService.getQuestionsForCompany(id);
   }
 }

@@ -73,25 +73,7 @@ export class ScoreService {
     /* tslint:enable */
   }
 
-  async getScoresForCompany(id: number): Promise<Score[]> {
-    /* tslint:disable */
-    return this.scoreRepository.query(`
-      SELECT 
-        "score"."score" AS "score",
-        "question"."pluralText" AS "pluralText",
-        "question"."id" AS "id"
-      FROM question 
-      INNER JOIN score ON "score"."id" = (
-        SELECT 
-          "id" 
-        FROM score 
-        WHERE "score"."questionId" = "question"."id" 
-        GROUP BY "id", "score"."questionId" 
-        LIMIT 1) 
-      WHERE "score"."companyId" = $1;
-    `, [id]);
-    /* tslint:enable */
-  }
+
 
   private getScore(voteDto: VoteDto, position: string) {
     return this.scoreRepository
