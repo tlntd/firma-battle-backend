@@ -77,7 +77,7 @@ export class ScoreService {
     return this.scoreRepository
       .createQueryBuilder()
       .where(`"questionId" = :questionId AND "companyId" = :${position}Id`, voteDto)
-      .orderBy('"createdAt"', 'ASC')
+      .orderBy('"createdAt"', 'DESC')
       .getOne();
   }
 
