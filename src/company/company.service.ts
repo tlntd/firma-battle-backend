@@ -3,7 +3,6 @@ import {InjectRepository} from '@nestjs/typeorm';
 import {Repository} from 'typeorm';
 import {Company} from './company.entity';
 import {Question} from '../question/interfaces/question.interface';
-import {Score} from '../score/score.entity';
 
 @Injectable()
 export class CompanyService {
