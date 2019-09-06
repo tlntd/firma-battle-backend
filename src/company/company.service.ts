@@ -43,19 +43,21 @@ export class CompanyService {
     /* tslint:enable */
   }
 
-  async getScoresForQuestionsForCompany(companyId: number, questionId: number): Promise<Score[]> {
+  async getScoresForCompany(id: number): Promise<Score[]> {
     /* tslint:disable */
     return this.scoreRepository.query(`
       SELECT 
-        "opponent"."name" AS "opponent_name", 
-        "question"."text" AS "question_text", 
+        "opponent"."name" AS "opponentName",
+        "opponent"."id" AS "opponentId", 
+        "question"."text" AS "questionText",
+        "question"."id" AS "questionId", 
         "delta" 
       FROM "score" "score" 
       INNER JOIN "company" "opponent" ON "opponent"."id"="score"."opponentId"  
       INNER JOIN "question" "question" ON "question"."id"="score"."questionId" 
-      WHERE "companyId" = $1 AND "questionId" = $2 
+      WHERE "companyId" = $1 
       ORDER BY "createdAt" DESC;
-    `, [companyId, questionId]);
+    `, [id]);
     /* tslint:enable */
   }
 }
