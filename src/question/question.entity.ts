@@ -9,6 +9,9 @@ export class Question extends BaseEntity {
     @Column()
     text: string;
 
+    @Column()
+    pluralText: string;
+
     @OneToMany(type => Score, score => score.question)
     scores: Score[];
 }
