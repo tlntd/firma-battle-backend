@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import {InjectRepository} from '@nestjs/typeorm';
 import {Repository} from 'typeorm';
 import {Company} from './company.entity';
+import {Question} from '../question/interfaces/question.interface';
 import {Score} from '../score/score.entity';
 
 @Injectable()
@@ -20,7 +21,7 @@ export class CompanyService {
     return this.companyRepository.createQueryBuilder().select(['id', 'name', 'logo']).orderBy('RANDOM()').limit(2).execute();
   }
 
-  async getQuestionsForCompany(id: number): Promise<Score[]> {
+  getQuestionsForCompany(id: number): Promise<Question[]> {
     /* tslint:disable */
     return this.companyRepository.query(`
       SELECT 
