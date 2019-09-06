@@ -39,13 +39,24 @@ export class ScoreService {
   }
 
   getScoresForQuestion(id: number): Promise<Score[]> {
-    return this.scoreRepository
-      .createQueryBuilder('score')
-      .leftJoinAndSelect('score.company', 'company')
-      .where('"questionId" = :id', {id})
-      .select(['score.id', 'score.score', 'company.name'])
-      .orderBy('score.createdAt', 'ASC')
-      .getMany();
+    /* tslint:disable */
+    return this.scoreRepository.query(`
+      SELECT 
+        "score"."id" AS "id", 
+        "score"."score", 
+        "company"."name" AS "name" 
+      FROM company 
+      INNER JOIN score ON "score"."id" = (
+        SELECT 
+          "id" 
+        FROM score 
+        WHERE "score"."companyId" = "company"."id" 
+        ORDER BY "score"."createdAt" 
+        DESC LIMIT 1) 
+      WHERE "score"."questionId" = $1 
+      ORDER BY "score" DESC
+    `, [id]);
+    /* tslint:enable */
   }
 
   private getScore(voteDto: VoteDto, position: string) {
