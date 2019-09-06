@@ -32,8 +32,8 @@ export class ScoreService {
 
     const outcome: OutcomeResponse = this.calculateOutcome(oldWinnerScore, oldLoserScore);
 
-    await this.saveScore(voteDto, winnerScore, outcome.winnerScore, 'winner');
-    await this.saveScore(voteDto, loserScore, outcome.loserScore, 'loser');
+    await this.saveScore(voteDto, outcome.winnerScore, outcome.winnerDelta, 'winner');
+    await this.saveScore(voteDto, outcome.loserScore, outcome.loserDelta, 'loser');
 
     return outcome;
   }
@@ -44,7 +44,7 @@ export class ScoreService {
       .leftJoinAndSelect('score.company', 'company')
       .where('"questionId" = :id', {id})
       .select(['score.id', 'score.score', 'company.name'])
-      .orderBy('score.score', 'DESC')
+      .orderBy('score.createdAt', 'ASC')
       .getMany();
   }
 
@@ -52,20 +52,18 @@ export class ScoreService {
     return this.scoreRepository
       .createQueryBuilder()
       .where(`"questionId" = :questionId AND "companyId" = :${position}Id`, voteDto)
+      .orderBy('"createdAt"', 'ASC')
       .getOne();
   }
 
-  private async saveScore(voteDto: VoteDto, score: Score, rating: number, position: string) {
-    if (score) {
-      score.score = rating;
-      return this.scoreRepository.save(score);
-    } else {
-      const newScore: Score = new Score();
-      newScore.company = await this.companyRepository.findOne(voteDto[`${position}Id`]);
-      newScore.question = await this.questionRepository.findOne(voteDto.questionId);
-      newScore.score = rating;
-      return this.scoreRepository.save(newScore);
-    }
+  private async saveScore(voteDto: VoteDto, rating: number, delta: number, position: string) {
+    const newScore: Score = new Score();
+    newScore.company = await this.companyRepository.findOne(voteDto[`${position}Id`]);
+    newScore.question = await this.questionRepository.findOne(voteDto.questionId);
+    newScore.score = rating;
+    newScore.delta = delta;
+    newScore.winner = position === 'winner';
+    return this.scoreRepository.save(newScore);
   }
 
   private calculateOutcome(a: number, b: number) {

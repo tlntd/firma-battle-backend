@@ -15,4 +15,13 @@ export class Score extends BaseEntity {
 
   @Column()
   score: number;
+
+  @Column()
+  delta: number;
+
+  @Column()
+  winner: boolean;
+
+  @Column('timestamp', { precision: 3, default: () => 'CURRENT_TIMESTAMP(3)'})
+  createdAt: Date;
 }
