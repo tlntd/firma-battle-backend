@@ -44,4 +44,5 @@ ON CONFLICT (id) DO UPDATE
   SET name      = excluded.name,
       location  = excluded.location,
       employees = excluded.employees,
-      industry  = excluded.industry;
+      industry  = excluded.industry,
+      logo      = excluded.logo;
