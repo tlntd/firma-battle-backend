@@ -8,7 +8,7 @@ import * as helmet from 'helmet';
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
   app.enableCors({
-    origin: process.env.NODE_ENV === 'production' ? 'https://firmabattle.com' : 'http://localhost:3001'
+    origin: process.env.NODE_ENV === 'production' ? 'https://firmabattle.fi' : 'http://localhost:3001'
   });
   app.use(helmet());
   app.useStaticAssets(join(__dirname, '..', 'public'));
