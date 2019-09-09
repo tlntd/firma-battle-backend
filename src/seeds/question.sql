@@ -14,7 +14,8 @@ INSERT INTO question (id, text, "pluralText") VALUES
     (13, 'Kumpi yritys tarjoaa paremman mahdollisuuden kehittyä?', 'Mikä yritys tarjoaa parhaimmat mahdollisuuden kehittyä?'),
     (14, 'Kumpi yritys on luotettavampi kumppani IT-projekteissa?', 'Mikä yritys on luotettavin kumppani IT-projekteissa?'),
     (15, 'Kummalla yrityksellä on kovempaa DevOps-osaamista?', 'Millä yrityksellä on kovinta DevOps-osaamista?'),
-    (16, 'Kummassa yrityksessä pääsisit enemmän vaikuttamaan työsi sisältöön?', 'Missä yrityksessä pääsisit eniten vaikuttamaan työsi sisältöön?')
+    (16, 'Kummassa yrityksessä pääsisit enemmän vaikuttamaan työsi sisältöön?', 'Missä yrityksessä pääsisit eniten vaikuttamaan työsi sisältöön?'),
+    (17, 'Kummalla yrityksellä on enemmän Mikkoja?', 'Missä yrityksessä on eniten Mikkoja?')
 ON CONFLICT (id) DO UPDATE
   SET text = excluded.text,
       "pluralText" = excluded."pluralText";
