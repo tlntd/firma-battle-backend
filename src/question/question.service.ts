@@ -18,4 +18,13 @@ export class QuestionService {
   getRandom(): Promise<Question> {
     return this.questionRepository.createQueryBuilder().orderBy('RANDOM()').limit(1).getOne();
   }
+
+  async exists(questionId: number): Promise<boolean> {
+    const result = await this.questionRepository.query(`
+        SELECT EXISTS(
+            SELECT "question"."id" FROM "question" WHERE "question"."id" = $1 LIMIT 1
+        );`,
+      [questionId]);
+    return result[0].exists;
+  }
 }

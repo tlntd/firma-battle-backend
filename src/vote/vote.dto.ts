@@ -1,12 +1,12 @@
-import {IsNumber} from 'class-validator';
+import {IsInt} from 'class-validator';
 
 export class VoteDto {
-  @IsNumber()
+  @IsInt()
   questionId: number;
 
-  @IsNumber()
+  @IsInt()
   winnerId: number;
 
-  @IsNumber()
+  @IsInt()
   loserId: number;
 }

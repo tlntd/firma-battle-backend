@@ -60,4 +60,13 @@ export class CompanyService {
     `, [id]);
     /* tslint:enable */
   }
+
+  async exists(companyId: number): Promise<boolean> {
+    const result = await this.companyRepository.query(`
+        SELECT EXISTS(
+            SELECT "company"."id" FROM "company" WHERE "company"."id" = $1 LIMIT 1
+        );`,
+      [companyId]);
+    return result[0].exists;
+  }
 }
