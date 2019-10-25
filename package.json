@@ -25,6 +25,7 @@
     "dotenv": "8.1.0",
     "helmet": "3.21.0",
     "nestjs-config": "1.4.4",
+    "nestjs-rate-limiter": "1.0.1",
     "pg": "7.12.1",
     "reflect-metadata": "0.1.13",
     "rimraf": "2.7.1",

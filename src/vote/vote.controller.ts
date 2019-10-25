@@ -1,4 +1,5 @@
 import {Body, Controller, HttpException, HttpStatus, Post} from '@nestjs/common';
+import { RateLimit } from 'nestjs-rate-limiter';
 import {VoteDto} from './vote.dto';
 import {ScoreService} from '../score/score.service';
 import {QuestionService} from '../question/question.service';
@@ -10,6 +11,7 @@ export class VoteController {
               private readonly scoreService: ScoreService,
               private readonly questionService: QuestionService) {}
 
+  @RateLimit({points: 1, duration: 1})
   @Post()
   async vote(@Body() voteDto: VoteDto) {
     const { winnerId, loserId, questionId } = voteDto;
