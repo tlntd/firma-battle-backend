@@ -39,7 +39,9 @@ INSERT INTO company (id, name, location, employees, industry, logo) VALUES
     (38, 'Visma Solutions','Helsinki, Lappeenranta','190','Tuotetalo','visma.png'),
     (39, 'Wolt','Helsinki','30','Konsultointi','wolt.png'),
     (40, 'Wunder','Helsinki, Turku','70','Konsultointi','wunder.png'),
-    (41, 'Wunderdog','Helsinki','80','Konsultointi','wunderdog.png')
+    (41, 'Wunderdog','Helsinki','80','Konsultointi','wunderdog.png'),
+    (42, 'Varjo','Helsinki','200','Tuotetalo','varjo.png'),
+    (43, 'New Things Co','Helsinki','15','Konsultointi','new-things-co.png')
 ON CONFLICT (id) DO UPDATE
   SET name      = excluded.name,
       location  = excluded.location,
